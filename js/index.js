@@ -1,8 +1,8 @@
 var canvasDots = function() {
   var canvas = document.querySelector('canvas'),
       ctx = canvas.getContext('2d'),
-      colorDot = '#fff',
-      color = '#fff';
+      colorDot = '#bfbfbf',
+      color = '#bfbfbf';
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   canvas.style.display = 'block';

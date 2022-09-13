@@ -178,11 +178,9 @@ html, body {
   margin-bottom: 0.5em; }
 
 .mdl-demo section .section__text a {
-  color: #3f729b;
   text-decoration: none; }
 
 .mdl-demo section .section__text a:hover {
-  color: #009688;
   text-decoration: underline; }
 
 .mdl-demo section .section__circle-container > .section__circle-container__circle {
@@ -274,3 +272,5 @@ html, body {
   background: #f00 url("../images/icon_twitter.svg") no-repeat 50% 50%;
   background-size: cover;
   fill: #ff0; }
+  
+a { color: inherit; } 

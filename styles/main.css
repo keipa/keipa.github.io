@@ -244,7 +244,7 @@ html, body {
   z-index: 99; }
 
 .copyright {
-  color: #c9c9c9;
+  color: #21262D;
   font-size: x-small;
   line-height: 12px;
   margin-top: 8px;
@@ -274,3 +274,17 @@ html, body {
   fill: #ff0; }
   
 a { color: inherit; } 
+
+.text-card {
+	background-color: #0D1117;
+	color: #C9D1D9;
+	border-radius: 0px 2px 2px 0px !important;
+}
+
+.image-card {
+	border-radius: 2px 0px 0px 2px!important;
+}
+
+.fluid-particles {
+	background-color: #010409
+}

@@ -177,8 +177,6 @@ html, body {
   margin: 0;
   margin-bottom: 0.5em; }
 
-.mdl-demo section .section__text a {
-  text-decoration: none; }
 
 .mdl-demo section .section__text a:hover {
   text-decoration: underline; }
@@ -244,7 +242,7 @@ html, body {
   z-index: 99; }
 
 .copyright {
-  color: #21262D;
+  color: dimgrey;
   font-size: x-small;
   line-height: 12px;
   margin-top: 8px;
@@ -287,4 +285,37 @@ a { color: inherit; }
 
 .fluid-particles {
 	background-color: #010409
+}
+
+.autograph__path {
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+.animated .autograph__path {
+  opacity: 1;
+  -webkit-animation-name: line;
+          animation-name: line;
+}
+
+@-webkit-keyframes line {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes line {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.autograph {
+  width: 200px;
+}
+
+::selection {
+  color: black;
+  background: grey;
 }

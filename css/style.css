@@ -39,9 +39,11 @@ canvas {
 
 .main-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  min-height: 100dvh;
   padding: var(--spacing-unit);
   position: relative;
   z-index: 1;
@@ -114,7 +116,7 @@ h3 {
 }
 
 .section-text a {
-  color: var(--text-secondary);
+  color: #bfc2c6;
   text-decoration: none;
   font-weight: 500;
   position: relative;
@@ -171,13 +173,13 @@ h3 {
 }
 
 .copyright {
-  position: absolute;
-  bottom: 1.5rem;
+  margin-top: 2rem;
   font-size: 0.75rem;
   color: var(--text-secondary);
   width: 100%;
   text-align: center;
   opacity: 0.6;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .copyright a {

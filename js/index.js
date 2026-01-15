@@ -156,6 +156,6 @@ function calcPaths(totalDur) {
 calcPaths();
 
 
-window.onload = function() {
+window.addEventListener('load', function() {
   canvasDots();
-};
+});

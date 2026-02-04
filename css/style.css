@@ -248,3 +248,61 @@ h3 {
   background: var(--accent-color);
   color: #fff;
 }
+
+/* Download Button */
+.btn-download {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 1.5rem;
+  height: 48px;
+  background: var(--accent-gradient);
+  border-radius: 12px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(88, 166, 255, 0.2);
+}
+
+.btn-download:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(88, 166, 255, 0.4);
+  filter: brightness(1.1);
+}
+
+.btn-download span {
+  position: relative;
+}
+
+.btn-download span::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #fff;
+  transition: width 0.3s ease;
+}
+
+.btn-download:hover span::after {
+  width: 100%;
+}
+
+@media (max-width: 480px) {
+  .contact-actions {
+    flex-wrap: wrap;
+  }
+
+  .btn-download {
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+    order: -1;
+    /* Put it on top if it's full width or keep order */
+    margin-bottom: 0.5rem;
+  }
+}

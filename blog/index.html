@@ -14,9 +14,9 @@
   <meta charset="utf-8">
   <meta name="theme-color" content="#010409">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="Writing by Nikolay Rovdo — thoughts on software engineering, cloud, and more.">
+  <meta name="description" content="Blog by Nikolay Rovdo — thoughts on software engineering, cloud, and more.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Writing — keipa</title>
+  <title>Blog — keipa</title>
 
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
@@ -398,13 +398,13 @@
     <nav class="blog-nav" aria-label="Breadcrumb">
       <a href="../" class="nav-home">keipa</a>
       <span class="nav-sep" aria-hidden="true">/</span>
-      <span id="nav-crumb">writing</span>
+      <span id="nav-crumb">blog</span>
     </nav>
 
     <!-- ── List view ────────────────────────────────────────────────────── -->
     <div id="view-list" class="view active" role="main">
       <header class="list-header">
-        <h1>Writing</h1>
+        <h1>Blog</h1>
         <p>Thoughts on software, engineering, and things I find interesting.</p>
       </header>
       <div id="posts-container">
@@ -581,10 +581,10 @@
     // ── Go back to list ───────────────────────────────────────────────────────
     function goBack(pushState = true) {
       if (pushState) history.pushState({}, '', './');
-      navCrumb.textContent = 'writing';
+      navCrumb.textContent = 'blog';
       progressBar.classList.remove('visible');
       progressBar.style.width = '0%';
-      document.title = 'Writing — keipa';
+      document.title = 'Blog — keipa';
       showView(viewList);
     }
 

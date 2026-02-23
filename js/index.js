@@ -165,3 +165,21 @@ window.addEventListener('load', function () {
     yearSpan.textContent = new Date().getFullYear();
   }
 });
+
+
+// Card flip
+var cardFlip = document.querySelector('.card-flip');
+if (cardFlip) {
+  document.querySelectorAll('.flip-corner').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      cardFlip.classList.toggle('flipped');
+    });
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      cardFlip.classList.remove('flipped');
+    }
+  });
+}

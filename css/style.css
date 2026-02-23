@@ -51,7 +51,6 @@ canvas {
 
 .profile-card {
   display: flex;
-  max-width: 900px;
   width: 100%;
   background: var(--glass-bg);
   backdrop-filter: blur(2px);
@@ -60,7 +59,9 @@ canvas {
   border-radius: var(--border-radius);
   overflow: hidden;
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
-  animation: fadeIn 0.8s ease-out;
+  position: relative;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 @keyframes fadeIn {
@@ -339,4 +340,179 @@ h3 {
 
 .page-nav-link:hover .nav-arrow {
   transform: translateX(4px);
+}
+
+/* ── Card Flip ─────────────────────────────────────────────────────────────── */
+
+.card-flip {
+  max-width: 900px;
+  width: 100%;
+  perspective: 1400px;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.card-inner {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+.card-flip.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+/* ── Back face ─────────────────────────────────────────────────────────────── */
+
+.card-back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: calc(var(--spacing-unit) * 3) calc(var(--spacing-unit) * 3.5);
+}
+
+.card-back-content {
+  width: 100%;
+  max-width: 380px;
+}
+
+.card-back-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  opacity: 0.45;
+}
+
+.card-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  text-decoration: none;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  transition: color 0.2s, padding-left 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card-menu-item:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.card-menu-item:hover {
+  color: var(--accent-color);
+  padding-left: 0.75rem;
+}
+
+.menu-arrow {
+  font-size: 1rem;
+  opacity: 0.3;
+  flex-shrink: 0;
+  transition: opacity 0.2s, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card-menu-item:hover .menu-arrow {
+  opacity: 1;
+  transform: translateX(6px);
+}
+
+/* ── Corner flip trigger ───────────────────────────────────────────────────── */
+
+.flip-corner {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 64px;
+  height: 64px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 2;
+}
+
+/* Triangle fold indicator via border trick */
+.flip-corner::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 46px 46px;
+  border-color: transparent transparent rgba(255, 255, 255, 0.05) transparent;
+  transition: border-color 0.25s ease, border-width 0.25s ease;
+}
+
+.flip-corner:hover::before {
+  border-width: 0 0 64px 64px;
+  border-color: transparent transparent rgba(88, 166, 255, 0.18) transparent;
+}
+
+.corner-icon {
+  position: absolute;
+  bottom: 11px;
+  right: 11px;
+  color: rgba(139, 148, 158, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s, transform 0.2s;
+  pointer-events: none;
+}
+
+.flip-corner:hover .corner-icon {
+  color: var(--accent-color);
+  transform: scale(1.2);
+}
+
+/* Back face corner — mirrored: left:0 appears at bottom-right from user's view */
+.flip-corner--back {
+  right: auto;
+  left: 0;
+}
+
+.flip-corner--back::before {
+  right: auto;
+  left: 0;
+  /* Mirror the triangle to bottom-left of this element */
+  border-width: 0 46px 46px 0;
+  border-color: transparent rgba(255, 255, 255, 0.05) transparent transparent;
+}
+
+.flip-corner--back:hover::before {
+  border-width: 0 64px 64px 0;
+  border-color: transparent rgba(88, 166, 255, 0.18) transparent transparent;
+}
+
+.flip-corner--back .corner-icon {
+  right: auto;
+  left: 11px;
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .card-back {
+    padding: calc(var(--spacing-unit) * 2.5);
+  }
+
+  .card-menu-item {
+    font-size: 1.2rem;
+  }
 }

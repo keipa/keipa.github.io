@@ -1,10 +1,10 @@
 {
   "posts": [
     {
-      "slug": "why-i-started-writing",
-      "title": "Why I Started Writing",
-      "date": "2023-12-01",
-      "description": "A short note on putting thoughts into words and what I hope to explore here."
+      "slug": "idisposable-and-finalizers",
+      "title": "IDisposable and Finalizers: difference and usage",
+      "date": "2026-02-24",
+      "description": "This is topic around Garbage collector in scope of .Net platform. "
     }
   ]
 }

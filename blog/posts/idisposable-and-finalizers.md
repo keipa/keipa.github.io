@@ -41,7 +41,9 @@ namespace Example.Basic_Dispose_Pattern
 
         public int ReadData()
         {
-            ObjectDisposedException.ThrowIf(disposed, this); // You do not need to throw ObjectDisposedException manually if the underlying object is going to throw it anyway.
+            // You do not need to throw ObjectDisposedException manually
+            // if the underlying object is going to throw it anyway.
+            ObjectDisposedException.ThrowIf(disposed, this); 
 
             return image.ReadByte(); 
         }

@@ -1,5 +1,33 @@
 'use strict';
 
+// ── Theme toggle ─────────────────────────────────────────────────────────────
+(function () {
+  var toggle = document.getElementById('theme-toggle');
+  var root = document.documentElement;
+  var stored = localStorage.getItem('theme');
+
+  function applyTheme(theme) {
+    root.setAttribute('data-theme', theme);
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute('content', theme === 'light' ? '#f5f0eb' : '#010409');
+    }
+  }
+
+  if (stored) {
+    applyTheme(stored);
+  }
+
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      var current = root.getAttribute('data-theme') || 'dark';
+      var next = current === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+      localStorage.setItem('theme', next);
+    });
+  }
+})();
+
 // ── DOM refs ──────────────────────────────────────────────────────────────────
 const progressBar    = document.getElementById('progress-bar');
 const viewList       = document.getElementById('view-list');

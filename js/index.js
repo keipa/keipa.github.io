@@ -3,6 +3,12 @@ var canvasDots = function () {
     ctx = canvas.getContext('2d'),
     colorDot = 'rgba(88, 166, 255, 0.3)',
     color = 'rgba(88, 166, 255, 0.1)';
+
+  // Expose a method to update particle colors for theme switching
+  canvasDots.updateColors = function (dot, line) {
+    colorDot = dot;
+    color = line;
+  };
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   canvas.style.display = 'block';
@@ -79,6 +85,8 @@ var canvasDots = function () {
 
   function createDots() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = colorDot;
+    ctx.strokeStyle = color;
     for (i = 0; i < dots.nb; i++) {
       dots.array.push(new Dot());
       dot = dots.array[i];
@@ -166,6 +174,41 @@ window.addEventListener('load', function () {
   }
 });
 
+
+// Theme toggle
+(function () {
+  var toggle = document.getElementById('theme-toggle');
+  var root = document.documentElement;
+  var stored = localStorage.getItem('theme');
+
+  function applyTheme(theme) {
+    root.setAttribute('data-theme', theme);
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute('content', theme === 'light' ? '#f5f0eb' : '#010409');
+    }
+    if (canvasDots.updateColors) {
+      if (theme === 'light') {
+        canvasDots.updateColors('rgba(47, 109, 186, 0.25)', 'rgba(47, 109, 186, 0.08)');
+      } else {
+        canvasDots.updateColors('rgba(88, 166, 255, 0.3)', 'rgba(88, 166, 255, 0.1)');
+      }
+    }
+  }
+
+  if (stored) {
+    applyTheme(stored);
+  }
+
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      var current = root.getAttribute('data-theme') || 'dark';
+      var next = current === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+      localStorage.setItem('theme', next);
+    });
+  }
+})();
 
 // Card flip
 var cardFlip = document.querySelector('.card-flip');

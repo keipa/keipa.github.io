@@ -112,9 +112,29 @@ canvas {
 
 .image-section {
   flex: 1;
-  background: url('../images/DSC_9253.jpg') center / cover;
+  background: url('../images/glasses.png') center / cover no-repeat;
   min-height: 400px;
   position: relative;
+}
+
+.image-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: url('../images/sunglasses.png') center / cover no-repeat;
+  opacity: 0;
+  transform: scale(1.015);
+  transition: opacity 0.45s ease, transform 0.6s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+[data-theme="light"] .image-section::before {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .image-section::after {
@@ -125,6 +145,8 @@ canvas {
   right: 0;
   bottom: 0;
   background: linear-gradient(to right, transparent, var(--glass-bg));
+  z-index: 2;
+  pointer-events: none;
 }
 
 .content-section {

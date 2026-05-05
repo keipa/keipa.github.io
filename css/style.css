@@ -112,29 +112,55 @@ canvas {
 
 .image-section {
   flex: 1;
-  background: url('../images/glasses.png') center / cover no-repeat;
   min-height: 400px;
   position: relative;
+  overflow: hidden;
+  background-color: #0b1522;
+  transition: background-color 0.45s ease;
 }
 
-.image-section::before {
-  content: '';
+[data-theme="light"] .image-section {
+  background-color: #d9d4cf;
+}
+
+.image-section-fallback {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: url('../images/sunglasses.png') center / cover no-repeat;
+  inset: 0;
+  background: radial-gradient(circle at 18% 24%, rgba(88, 166, 255, 0.42), rgba(8, 16, 28, 0.9) 58%);
+  z-index: 0;
+  pointer-events: none;
+  transition: background 0.45s ease;
+}
+
+[data-theme="light"] .image-section-fallback {
+  background: radial-gradient(circle at 18% 24%, rgba(255, 255, 255, 0.9), rgba(232, 220, 208, 0.95) 58%);
+}
+
+.theme-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   opacity: 0;
-  transform: scale(1.015);
-  transition: opacity 0.45s ease, transform 0.6s ease;
+  visibility: hidden;
   z-index: 1;
   pointer-events: none;
+  transition: opacity 0.24s linear, visibility 0s linear 0.24s;
 }
 
-[data-theme="light"] .image-section::before {
+.theme-video.is-visible {
   opacity: 1;
-  transform: scale(1);
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.theme-video.is-on-top {
+  z-index: 2;
+}
+
+.theme-video.is-fading-out {
+  opacity: 0;
 }
 
 .image-section::after {
@@ -145,7 +171,7 @@ canvas {
   right: 0;
   bottom: 0;
   background: linear-gradient(to right, transparent, var(--glass-bg));
-  z-index: 2;
+  z-index: 3;
   pointer-events: none;
 }
 

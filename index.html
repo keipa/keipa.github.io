@@ -46,7 +46,27 @@
       <div class="card-inner">
 
         <section class="profile-card">
-      <div class="image-section"></div>
+      <div class="image-section" data-media-state="loading" data-transition-video="">
+        <div class="image-section-fallback" aria-hidden="true"></div>
+        <video
+          id="theme-video-man"
+          class="theme-video theme-video--man"
+          src="video/man.mp4"
+          preload="auto"
+          muted
+          playsinline
+          disablepictureinpicture
+          aria-hidden="true"></video>
+        <video
+          id="theme-video-reverse"
+          class="theme-video theme-video--reverse"
+          src="video/reverse.mp4"
+          preload="auto"
+          muted
+          playsinline
+          disablepictureinpicture
+          aria-hidden="true"></video>
+      </div>
 
       <div class="content-section">
         <h1 class="section-title">Hi,</h1>

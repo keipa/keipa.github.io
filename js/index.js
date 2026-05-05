@@ -180,6 +180,12 @@ window.addEventListener('load', function () {
   var toggle = document.getElementById('theme-toggle');
   var root = document.documentElement;
   var stored = localStorage.getItem('theme');
+  var imageSection = document.querySelector('.image-section');
+  var manVideo = document.getElementById('theme-video-man');
+  var reverseVideo = document.getElementById('theme-video-reverse');
+  var transitionToken = 0;
+  var transitionFadeMs = 240;
+  var settleTimerId = null;
 
   function applyTheme(theme) {
     root.setAttribute('data-theme', theme);
@@ -196,16 +202,235 @@ window.addEventListener('load', function () {
     }
   }
 
-  if (stored) {
-    applyTheme(stored);
+  function hasThemeVideos() {
+    return !!(imageSection && manVideo && reverseVideo);
   }
+
+  function videoNameForTheme(theme) {
+    return theme === 'light' ? 'reverse' : 'man';
+  }
+
+  function videoNameForTransition(currentTheme) {
+    return currentTheme === 'dark' ? 'man' : 'reverse';
+  }
+
+  function getVideoByName(name) {
+    return name === 'man' ? manVideo : reverseVideo;
+  }
+
+  function clearSettleTimer() {
+    if (settleTimerId !== null) {
+      clearTimeout(settleTimerId);
+      settleTimerId = null;
+    }
+  }
+
+  function waitForFrame(video) {
+    return new Promise(function (resolve) {
+      if (video.readyState >= 2) {
+        resolve();
+        return;
+      }
+
+      var onReady = function () {
+        video.removeEventListener('loadeddata', onReady);
+        video.removeEventListener('error', onError);
+        resolve();
+      };
+
+      var onError = function () {
+        video.removeEventListener('loadeddata', onReady);
+        video.removeEventListener('error', onError);
+        console.error('Failed to load theme video frame:', video.currentSrc || video.src);
+        resolve();
+      };
+
+      video.addEventListener('loadeddata', onReady);
+      video.addEventListener('error', onError);
+    });
+  }
+
+  function ensureFirstFrame(video) {
+    if (video.readyState > 0) {
+      video.currentTime = 0;
+      return Promise.resolve();
+    }
+
+    video.load();
+    return waitForFrame(video).then(function () {
+      if (video.readyState > 0) {
+        video.currentTime = 0;
+      }
+    });
+  }
+
+  function clearPlaybackState(video) {
+    video.pause();
+    video.classList.remove('is-playing', 'is-fading-out', 'is-on-top');
+  }
+
+  function hideVideo(video) {
+    clearPlaybackState(video);
+    video.classList.remove('is-visible');
+    if (video.readyState > 0) {
+      video.currentTime = 0;
+    }
+  }
+
+  function showLayeredVideos(topVideoName, bottomVideoName) {
+    var topVideo = getVideoByName(topVideoName);
+    var bottomVideo = getVideoByName(bottomVideoName);
+
+    [manVideo, reverseVideo].forEach(function (video) {
+      video.classList.remove('is-playing', 'is-fading-out');
+      video.classList.toggle('is-visible', video === topVideo || video === bottomVideo);
+      video.classList.toggle('is-on-top', video === topVideo);
+    });
+  }
+
+  function setRestingTheme(theme) {
+    if (!hasThemeVideos()) {
+      return;
+    }
+
+    clearSettleTimer();
+    var visibleName = videoNameForTheme(theme);
+    var visibleVideo = getVideoByName(visibleName);
+    var hiddenVideo = visibleVideo === manVideo ? reverseVideo : manVideo;
+
+    hideVideo(hiddenVideo);
+    clearPlaybackState(visibleVideo);
+    visibleVideo.classList.add('is-visible');
+    imageSection.setAttribute('data-media-state', 'resting-' + theme);
+    imageSection.setAttribute('data-transition-video', visibleName);
+    imageSection.setAttribute('data-next-video', '');
+
+    if (visibleVideo.readyState > 0) {
+      visibleVideo.currentTime = 0;
+      return;
+    }
+
+    visibleVideo.load();
+    waitForFrame(visibleVideo).then(function () {
+      if (visibleVideo.readyState > 0) {
+        visibleVideo.currentTime = 0;
+      }
+    });
+  }
+
+  function initializeThemeVideos(theme) {
+    if (!hasThemeVideos()) {
+      return;
+    }
+
+    [manVideo, reverseVideo].forEach(function (video) {
+      video.muted = true;
+      video.defaultMuted = true;
+      video.controls = false;
+      video.playsInline = true;
+      video.classList.remove('is-visible', 'is-playing', 'is-fading-out', 'is-on-top');
+    });
+
+    setRestingTheme(theme);
+
+    [manVideo, reverseVideo].forEach(function (video) {
+      ensureFirstFrame(video);
+    });
+  }
+
+  function bindTransitionEnd(video, handler) {
+    if (video._themeTransitionEndHandler) {
+      video.removeEventListener('ended', video._themeTransitionEndHandler);
+    }
+
+    video._themeTransitionEndHandler = handler;
+    video.addEventListener('ended', handler, { once: true });
+  }
+
+  function playThemeTransition(currentTheme, nextTheme) {
+    if (!hasThemeVideos()) {
+      return;
+    }
+
+    transitionToken += 1;
+    var token = transitionToken;
+    clearSettleTimer();
+    var transitionVideoName = videoNameForTransition(currentTheme);
+    var targetVideoName = videoNameForTheme(nextTheme);
+    var transitionVideo = getVideoByName(transitionVideoName);
+    var targetVideo = getVideoByName(targetVideoName);
+
+    [manVideo, reverseVideo].forEach(function (video) {
+      if (video._themeTransitionEndHandler) {
+        video.removeEventListener('ended', video._themeTransitionEndHandler);
+        video._themeTransitionEndHandler = null;
+      }
+      video.classList.remove('is-playing', 'is-fading-out', 'is-on-top');
+    });
+
+    imageSection.setAttribute('data-media-state', 'transitioning-' + currentTheme + '-to-' + nextTheme);
+    imageSection.setAttribute('data-transition-video', transitionVideoName);
+    imageSection.setAttribute('data-next-video', targetVideoName);
+    imageSection.setAttribute('data-last-transition-video', transitionVideoName);
+
+    var settleToRestingFrame = function () {
+      if (token !== transitionToken) {
+        return;
+      }
+
+      if (transitionVideo._themeTransitionEndHandler) {
+        transitionVideo.removeEventListener('ended', transitionVideo._themeTransitionEndHandler);
+        transitionVideo._themeTransitionEndHandler = null;
+      }
+
+      transitionVideo.classList.remove('is-playing');
+      transitionVideo.classList.add('is-fading-out');
+
+      settleTimerId = setTimeout(function () {
+        if (token !== transitionToken) {
+          return;
+        }
+        setRestingTheme(nextTheme);
+      }, transitionFadeMs);
+    };
+
+    Promise.all([
+      ensureFirstFrame(transitionVideo),
+      ensureFirstFrame(targetVideo)
+    ]).then(function () {
+      if (token !== transitionToken) {
+        return;
+      }
+
+      showLayeredVideos(transitionVideoName, targetVideoName);
+      transitionVideo.classList.add('is-playing');
+      bindTransitionEnd(transitionVideo, settleToRestingFrame);
+
+      var playPromise = transitionVideo.play();
+      if (playPromise && typeof playPromise.then === 'function') {
+        playPromise.catch(function (error) {
+          if (token !== transitionToken) {
+            return;
+          }
+          console.error('Theme transition video playback failed:', error);
+          settleToRestingFrame();
+        });
+      }
+    });
+  }
+
+  var initialTheme = stored === 'light' ? 'light' : 'dark';
+  applyTheme(initialTheme);
+  initializeThemeVideos(initialTheme);
 
   if (toggle) {
     toggle.addEventListener('click', function () {
       var current = root.getAttribute('data-theme') || 'dark';
       var next = current === 'dark' ? 'light' : 'dark';
+
       applyTheme(next);
       localStorage.setItem('theme', next);
+      playThemeTransition(current, next);
     });
   }
 })();

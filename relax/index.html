@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relax</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #000;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    cursor: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  body.active { cursor: default; }
+
+  #bg-video {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  /* Controls bar */
+  .controls {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 24px;
+    background: linear-gradient(transparent, rgba(0,0,0,.45));
+    opacity: 0;
+    transition: opacity .6s ease;
+  }
+
+  body.active .controls { opacity: 1; }
+
+  .controls label {
+    color: rgba(255,255,255,.7);
+    font-size: 12px;
+    letter-spacing: .04em;
+    white-space: nowrap;
+  }
+
+  .controls select,
+  .controls input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 6px;
+    color: rgba(255,255,255,.85);
+    font-size: 12px;
+    padding: 4px 8px;
+    outline: none;
+    transition: background .3s;
+  }
+
+  .controls select:hover,
+  .controls select:focus {
+    background: rgba(255,255,255,.18);
+  }
+
+  .controls select { max-width: 160px; cursor: pointer; }
+  .controls select option { background: #1a1a1a; color: #ddd; }
+
+  /* Volume slider */
+  input[type=range] {
+    width: 220px;
+    height: 4px;
+    padding: 0;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.8);
+    border: none;
+    margin-top: -4px;
+  }
+
+  input[type=range]::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.8);
+    border: none;
+  }
+
+  input[type=range]::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255,255,255,.2);
+  }
+
+  input[type=range]::-moz-range-track {
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255,255,255,.2);
+  }
+
+  .spacer { flex: 1; }
+
+  /* Shuffle buttons */
+  .btn {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 6px;
+    color: rgba(255,255,255,.7);
+    font-size: 12px;
+    padding: 4px 10px;
+    cursor: pointer;
+    transition: background .3s;
+    white-space: nowrap;
+  }
+  .btn:hover { background: rgba(255,255,255,.18); color: #fff; }
+
+  /* Click-to-start overlay */
+  #start-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(0,0,0,.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity .8s ease;
+  }
+  #start-overlay.hidden { opacity: 0; pointer-events: none; }
+  #start-overlay span {
+    color: rgba(255,255,255,.5);
+    font-size: 16px;
+    letter-spacing: .08em;
+  }
+</style>
+</head>
+<body>
+
+<div id="start-overlay"><span>click anywhere to begin</span></div>
+
+<video id="bg-video" muted loop playsinline></video>
+<audio id="bg-audio" loop></audio>
+
+<div class="controls">
+  <label>🎬</label>
+  <select id="video-select"></select>
+
+  <label>🎵</label>
+  <select id="audio-select"></select>
+
+  <div class="spacer"></div>
+
+  <button class="btn" id="shuffle-btn" title="Shuffle both">⟳</button>
+
+  <button class="btn" id="mute-btn" title="Mute/Unmute">🔊</button>
+  <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5">
+  <span id="volume-display" style="color:rgba(255,255,255,.7);font-size:12px;min-width:32px;text-align:right;font-variant-numeric:tabular-nums">50%</span>
+</div>
+
+<script>
+const videos = [
+  'aurora','clever','clouds','desert','fire','grassdrop',
+  'lake','lake2','meduza','moscow1','mountains','mountains2',
+  'night','ocean','oilpump','palms','rain','raindrops',
+  'sea','sea2','singapore','snow','space','sunsetocean',
+  'town','volcano','waterfall','waterfall2','waterfall3','waterfall4'
+];
+
+const sounds = [
+  'Beach','Blue Line Loop','Cosmos','Day and Night','Dream of Wings',
+  'Fire','Get those vibes','Glass of hope','Healing','Inner circle',
+  'Moon Garden','Morning Sun','Ocean','Song of Wind','Spa Bells',
+  'Thai','The Light','The night sub'
+];
+
+const videoEl  = document.getElementById('bg-video');
+const audioEl  = document.getElementById('bg-audio');
+const videoSel = document.getElementById('video-select');
+const audioSel = document.getElementById('audio-select');
+const volumeEl = document.getElementById('volume');
+const overlay  = document.getElementById('start-overlay');
+const shuffleBtn = document.getElementById('shuffle-btn');
+
+// Populate selects
+videos.forEach(v => {
+  const o = document.createElement('option');
+  o.value = v;
+  o.textContent = v;
+  videoSel.appendChild(o);
+});
+
+sounds.forEach(s => {
+  const o = document.createElement('option');
+  o.value = s;
+  o.textContent = s;
+  audioSel.appendChild(o);
+});
+
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function loadVideo(name) {
+  videoSel.value = name;
+  // moscow1 has no mp4
+  videoEl.innerHTML = '';
+  ['mp4','webm','ogv'].forEach(ext => {
+    const s = document.createElement('source');
+    s.src = 'media/video/' + name + '.' + ext;
+    s.type = ext === 'mp4' ? 'video/mp4' : ext === 'webm' ? 'video/webm' : 'video/ogg';
+    videoEl.appendChild(s);
+  });
+  videoEl.load();
+  videoEl.play().catch(() => {});
+}
+
+function loadAudio(name) {
+  audioSel.value = name;
+  audioEl.innerHTML = '';
+  ['mp3','ogg','aac'].forEach(ext => {
+    const s = document.createElement('source');
+    s.src = 'media/sounds/' + name + '.' + ext;
+    s.type = ext === 'mp3' ? 'audio/mpeg' : ext === 'ogg' ? 'audio/ogg' : 'audio/aac';
+    audioEl.appendChild(s);
+  });
+  audioEl.load();
+  audioEl.play().catch(() => {});
+}
+
+// Volume & Mute
+audioEl.volume = 0.5;
+const muteBtn = document.getElementById('mute-btn');
+
+function updateMuteBtn() {
+  const v = audioEl.muted ? 0 : audioEl.volume;
+  muteBtn.textContent = v === 0 ? '🔇' : v < 0.5 ? '🔉' : '🔊';
+  document.getElementById('volume-display').textContent = Math.round((audioEl.muted ? 0 : audioEl.volume) * 100) + '%';
+}
+
+function saveVolume() {
+  try {
+    localStorage.setItem('relax_vol', audioEl.volume);
+    localStorage.setItem('relax_muted', audioEl.muted ? '1' : '0');
+  } catch(e) {}
+}
+
+function loadVolume() {
+  try {
+    const v = localStorage.getItem('relax_vol');
+    if (v !== null) {
+      audioEl.volume = parseFloat(v);
+      volumeEl.value = audioEl.volume;
+    }
+    if (localStorage.getItem('relax_muted') === '1') audioEl.muted = true;
+  } catch(e) {}
+  updateMuteBtn();
+}
+loadVolume();
+
+volumeEl.addEventListener('input', () => {
+  audioEl.volume = volumeEl.value;
+  audioEl.muted = false;
+  updateMuteBtn();
+  saveVolume();
+});
+
+muteBtn.addEventListener('click', () => {
+  audioEl.muted = !audioEl.muted;
+  updateMuteBtn();
+  saveVolume();
+});
+
+// Selectors
+videoSel.addEventListener('change', () => loadVideo(videoSel.value));
+audioSel.addEventListener('change', () => loadAudio(audioSel.value));
+
+// Shuffle
+shuffleBtn.addEventListener('click', () => {
+  loadVideo(pick(videos));
+  loadAudio(pick(sounds));
+});
+
+// Show/hide controls on mouse movement
+let hideTimer;
+function showControls() {
+  document.body.classList.add('active');
+  clearTimeout(hideTimer);
+  hideTimer = setTimeout(() => document.body.classList.remove('active'), 2500);
+}
+document.addEventListener('mousemove', showControls);
+document.addEventListener('touchstart', showControls);
+
+// Click-to-start (browsers require user gesture for autoplay)
+overlay.addEventListener('click', () => {
+  overlay.classList.add('hidden');
+  loadVideo(pick(videos));
+  loadAudio(pick(sounds));
+});
+
+// Preselect random values shown in dropdowns
+videoSel.value = pick(videos);
+audioSel.value = pick(sounds);
+</script>
+</body>
+</html>

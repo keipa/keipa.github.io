@@ -1,0 +1,501 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArmorRiot — Finish the Game You Started</title>
+    <!-- Fonts: Syne (display) + Inter (body) + JetBrains Mono (code) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <a href="#home" class="logo-wrapper">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-label="ArmorRiot logo" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="16,2 30,10 30,22 16,30 2,22 2,10" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--color-primary)"/>
+                    <polygon points="16,7 25,12 25,20 16,25 7,20 7,12" fill="oklch(0.68 0.22 295 / 0.12)" stroke="var(--color-primary)" stroke-width="1"/>
+                    <polygon points="16,12 20,14.5 20,19 16,21.5 12,19 12,14.5" fill="oklch(0.68 0.22 295 / 0.35)"/>
+                </svg>
+                <span class="logo-text">ArmorRiot</span>
+            </a>
+
+            <nav class="desktop-nav">
+                <ul class="nav-list" role="list">
+                    <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#problem" class="nav-link">Problem</a></li>
+                    <li><a href="#solution" class="nav-link">Solution</a></li>
+                    <li><a href="#product" class="nav-link">Product</a></li>
+                    <li><a href="#why" class="nav-link">Why</a></li>
+                    <li><a href="#vision" class="nav-link">Vision</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="#contact" class="btn btn-primary btn-sm">Contact Us</a>
+                <button class="mobile-toggle" aria-label="Toggle menu">
+                    <span class="hamburger"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-overlay">
+        <nav class="mobile-nav">
+            <ul class="mobile-nav-list" role="list">
+                <li><a href="#home" class="mobile-nav-link">Home</a></li>
+                <li><a href="#problem" class="mobile-nav-link">Problem</a></li>
+                <li><a href="#solution" class="mobile-nav-link">Solution</a></li>
+                <li><a href="#product" class="mobile-nav-link">Product</a></li>
+                <li><a href="#why" class="mobile-nav-link">Why</a></li>
+                <li><a href="#vision" class="mobile-nav-link">Vision</a></li>
+                <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <main id="main-content">
+        <section id="home" class="hero-section">
+            <div class="video-background">
+                <video autoplay muted loop playsinline class="bg-video">
+                    <source src="videos/bg.mp4" type="video/mp4">
+                </video>
+                <div class="video-overlay"></div>
+            </div>
+            
+            <div class="hero-container">
+                <div class="hero-content">
+                    <span class="eyebrow-label">AI Game Creation Platform</span>
+                    <h1 class="hero-title">Finish the Game You Started</h1>
+                    <p class="hero-subtitle">ArmorRiot is a browser-based AI platform that helps creators build and publish web and mobile games — without learning a traditional game engine.</p>
+                    
+                    <div class="mission-wrapper">
+                        <span class="badge badge-violet">Mission: Help people finish the games they dream about creating</span>
+                    </div>
+
+                    <div class="hero-actions">
+                        <a href="#contact" class="btn btn-primary btn-lg">Contact Us →</a>
+                    </div>
+                </div>
+
+                <a href="#problem" class="scroll-indicator" aria-label="Scroll down">
+                    <span class="chevron"></span>
+                </a>
+            </div>
+        </section>
+
+        <section id="problem" class="section-padding" data-reveal>
+            <div class="container">
+                <div class="two-col-grid">
+                    <div class="col-content stagger-1" data-reveal>
+                        <span class="badge badge-neutral">The Problem</span>
+                        <h2 class="section-title t-2xl">Millions dream of creating games. Most never finish one.</h2>
+                        <p class="section-body t-base">Modern game engines are powerful but overwhelming. They were designed for professional developers — not creators. Countless game ideas are abandoned before they become playable.</p>
+                        
+                        <div class="obstacle-cloud">
+                            <span class="tag">Hierarchy</span>
+                            <span class="tag">Inspector</span>
+                            <span class="tag">Assets</span>
+                            <span class="tag">Prefabs</span>
+                            <span class="tag">Shaders</span>
+                            <span class="tag">Lighting</span>
+                            <span class="tag">Build Settings</span>
+                            <span class="tag">Multiplayer Setup</span>
+                        </div>
+                    </div>
+                    <div class="col-visual stagger-2" data-reveal>
+                        <h3 class="sub-heading t-lg text-center mb-8">Why Existing Tools Fail</h3>
+                        <div class="flow-square">
+                            <div class="flow-step step-idea">
+                                <span class="flow-step-icon"><i class="fa-solid fa-lightbulb"></i></span>
+                                <span class="flow-step-label">Idea</span>
+                            </div>
+                            <div class="flow-step step-unity">
+                                <span class="flow-step-icon"><i class="fa-solid fa-gear"></i></span>
+                                <span class="flow-step-label">Unity / Unreal</span>
+                            </div>
+                            <div class="flow-step step-complexity">
+                                <span class="flow-step-icon"><i class="fa-solid fa-puzzle-piece"></i></span>
+                                <span class="flow-step-label">Complexity</span>
+                            </div>
+                            <div class="flow-step failed step-abandoned">
+                                <span class="flow-step-icon"><i class="fa-solid fa-circle-xmark"></i></span>
+                                <span class="flow-step-label">Abandoned Project</span>
+                            </div>
+                        </div>
+                        <p class="closing-statement t-sm text-center mt-8">Many give up before building their first playable game.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solution" class="section-padding surface-lift" data-reveal>
+            <div class="container text-center">
+                <span class="badge badge-violet">The Solution</span>
+                <h2 class="section-title t-2xl">ArmorRiot transforms game creation into a simple workflow.</h2>
+                <p class="section-body t-base mx-auto">Instead of learning a game engine, creators describe what they want to build. ArmorRiot handles the complexity behind the scenes.</p>
+                
+                <div class="flow-horizontal stagger-1" data-reveal>
+                    <div class="flow-step">
+                        <span class="flow-step-icon"><i class="fa-solid fa-lightbulb"></i></span>
+                        <span class="flow-step-label">Idea</span>
+                    </div>
+                    <span class="flow-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+                    <div class="flow-step active">
+                        <span class="flow-step-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+                        <span class="flow-step-label">Prompt</span>
+                    </div>
+                    <span class="flow-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+                    <div class="flow-step">
+                        <span class="flow-step-icon"><i class="fa-solid fa-gamepad"></i></span>
+                        <span class="flow-step-label">Playable Game</span>
+                    </div>
+                    <span class="flow-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+                    <div class="flow-step">
+                        <span class="flow-step-icon"><i class="fa-solid fa-rocket"></i></span>
+                        <span class="flow-step-label">Publish</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="why-now" class="section-padding" data-reveal>
+            <div class="container">
+                <div class="text-center mb-16">
+                    <span class="badge badge-amber">Why Now</span>
+                    <h2 class="section-title t-2xl">AI can already generate everything games need.</h2>
+                </div>
+                
+                <div class="capability-grid stagger-1" data-reveal>
+                    <div class="card card-s2">
+                        <div class="card-icon"><i class="fa-solid fa-image"></i></div>
+                        <div class="card-title">Images</div>
+                    </div>
+                    <div class="card card-s2">
+                        <div class="card-icon"><i class="fa-solid fa-box"></i></div>
+                        <div class="card-title">3D Assets</div>
+                    </div>
+                    <div class="card card-s2">
+                        <div class="card-icon"><i class="fa-solid fa-code"></i></div>
+                        <div class="card-title">Code</div>
+                    </div>
+                    <div class="card card-s2">
+                        <div class="card-icon"><i class="fa-solid fa-file-lines"></i></div>
+                        <div class="card-title">Content</div>
+                    </div>
+                    <div class="card card-s2">
+                        <div class="card-icon"><i class="fa-solid fa-comment"></i></div>
+                        <div class="card-title">Dialogue</div>
+                    </div>
+                </div>
+
+                <div class="insight-statement stagger-2" data-reveal>
+                    <p>Yet game creation remains fragmented across disconnected tools and workflows. <strong>ArmorRiot brings it all together.</strong></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="customers" class="section-padding surface-lift" data-reveal>
+            <div class="container">
+                <div class="text-center mb-16">
+                    <span class="badge badge-neutral">Target Customers</span>
+                    <h2 class="section-title t-2xl">Who is ArmorRiot for?</h2>
+                </div>
+
+                <div class="customer-grid stagger-1" data-reveal>
+                    <div class="card card-s2 hover-lift">
+                        <div class="card-header">
+                            <span class="card-icon"><i class="fa-solid fa-gamepad"></i></span>
+                            <h3 class="card-title t-lg">Indie Developers</h3>
+                        </div>
+                        <ul class="bullet-list" role="list">
+                            <li>Want to create games</li>
+                            <li>Limited technical experience</li>
+                            <li>Limited budget</li>
+                            <li>Need speed</li>
+                        </ul>
+                    </div>
+                    <div class="card card-s2 hover-lift">
+                        <div class="card-header">
+                            <span class="card-icon"><i class="fa-solid fa-building"></i></span>
+                            <h3 class="card-title t-lg">Small Studios</h3>
+                        </div>
+                        <ul class="bullet-list" role="list">
+                            <li>Need rapid prototyping</li>
+                            <li>Lower production costs</li>
+                            <li>Faster iteration</li>
+                        </ul>
+                    </div>
+                    <div class="card card-s2 hover-lift">
+                        <div class="card-header">
+                            <span class="card-icon"><i class="fa-solid fa-globe"></i></span>
+                            <h3 class="card-title t-lg">Web Developers</h3>
+                        </div>
+                        <ul class="bullet-list" role="list">
+                            <li>Already understand web tech</li>
+                            <li>Want to create games</li>
+                            <li>No traditional engine learning</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="product" class="section-padding" data-reveal>
+            <div class="container">
+                <div class="text-center mb-16">
+                    <span class="badge badge-neutral">Product</span>
+                    <h2 class="section-title t-2xl">Everything required to create and publish games — in one platform.</h2>
+                </div>
+
+                <div class="architecture-diagram stagger-1" data-reveal>
+                    <div class="arch-layer arch-creation">
+                        <div class="layer-info">
+                            <h3 class="layer-title t-lg">Creation Layer</h3>
+                            <p class="layer-desc t-sm">AI Scene Generation, Asset Generation, Visual Editing, Gameplay Generation</p>
+                        </div>
+                        <div class="layer-tags">
+                            <span class="badge badge-violet">AI Scenes</span>
+                            <span class="badge badge-violet">Assets</span>
+                            <span class="badge badge-violet">Visual Editor</span>
+                        </div>
+                    </div>
+                    <div class="arch-layer arch-infra">
+                        <div class="layer-info">
+                            <h3 class="layer-title t-lg">Infrastructure Layer</h3>
+                            <p class="layer-desc t-sm">Multiplayer, Analytics, Storage, Live Updates</p>
+                        </div>
+                        <div class="layer-tags">
+                            <span class="badge badge-neutral">Multiplayer</span>
+                            <span class="badge badge-neutral">Analytics</span>
+                            <span class="badge badge-neutral">Live Ops</span>
+                        </div>
+                    </div>
+                    <div class="arch-layer arch-publish">
+                        <div class="layer-info">
+                            <h3 class="layer-title t-lg">Publishing Layer</h3>
+                            <p class="layer-desc t-sm">Browser Games, Hybrid Mobile Games, One-Click Publishing</p>
+                        </div>
+                        <div class="layer-tags">
+                            <span class="badge badge-amber">Web</span>
+                            <span class="badge badge-amber">Mobile</span>
+                            <span class="badge badge-amber">Instant Ship</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pipeline-wrapper mt-24 stagger-2" data-reveal>
+                    <h3 class="sub-heading t-lg text-center mb-12">AI-Powered Asset Pipeline</h3>
+                    <p class="section-body t-base text-center mx-auto mb-12">Users can turn images, references, and prompts into game content without leaving the platform.</p>
+                    
+                    <div class="flow-horizontal pipeline-flow">
+                        <div class="flow-step">
+                            <span class="flow-step-icon"><i class="fa-solid fa-image"></i></span>
+                            <span class="flow-step-label">Image</span>
+                        </div>
+                    <span class="flow-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+                    <div class="flow-step">
+                        <span class="flow-step-icon"><i class="fa-solid fa-robot"></i></span>
+                        <span class="flow-step-label">AI 3D Gen</span>
+                    </div>
+                    <span class="flow-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+                    <div class="flow-step">
+                        <span class="flow-step-icon"><i class="fa-solid fa-box"></i></span>
+                        <span class="flow-step-label">Game-Ready</span>
+                    </div>
+                    <span class="flow-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+                    <div class="flow-step">
+                        <span class="flow-step-icon"><i class="fa-solid fa-cubes"></i></span>
+                        <span class="flow-step-label">Scene Integration</span>
+                    </div>
+                    <span class="flow-arrow"><i class="fa-solid fa-chevron-right"></i></span>
+                        <div class="flow-step active glow">
+                            <span class="flow-step-icon"><i class="fa-solid fa-play"></i></span>
+                            <span class="flow-step-label">Playable Game</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="why" class="section-padding surface-lift" data-reveal>
+            <div class="container">
+                <div class="text-center mb-16">
+                    <span class="badge badge-violet">Why ArmorRiot</span>
+                    <h2 class="section-title t-2xl">The game engine you don't have to learn.</h2>
+                </div>
+
+                <div class="table-wrapper stagger-1" data-reveal>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Unity</th>
+                                <th class="col-highlight">ArmorRiot <i class="fa-solid fa-wand-magic-sparkles"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Learning Curve</td>
+                                <td>Weeks or months</td>
+                                <td class="col-highlight">Hours</td>
+                            </tr>
+                            <tr>
+                                <td>Installation</td>
+                                <td>Required</td>
+                                <td class="col-highlight">Browser-Based</td>
+                            </tr>
+                            <tr>
+                                <td>Multiplayer</td>
+                                <td>Complex setup</td>
+                                <td class="col-highlight">Built-In</td>
+                            </tr>
+                            <tr>
+                                <td>Web Publishing</td>
+                                <td>Possible but complex</td>
+                                <td class="col-highlight">One Click</td>
+                            </tr>
+                            <tr>
+                                <td>Mobile Publishing</td>
+                                <td>Supported</td>
+                                <td class="col-highlight">Supported</td>
+                            </tr>
+                            <tr>
+                                <td>AI Workflow</td>
+                                <td>Optional</td>
+                                <td class="col-highlight">Core Experience</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="games" class="section-padding" data-reveal>
+            <div class="container">
+                <div class="text-center mb-16">
+                    <span class="badge badge-neutral">Instant Games</span>
+                    <h2 class="section-title t-2xl">Fast to build. Fast to publish.</h2>
+                    <p class="section-body t-base mx-auto">ArmorRiot focuses on playable games delivered quickly — not AAA productions, not massive pipelines.</p>
+                </div>
+
+                <div class="obstacle-cloud center-cloud stagger-1" data-reveal>
+                    <span class="tag">Browser Games</span>
+                    <span class="tag">Hybrid Mobile Games</span>
+                    <span class="tag">Social Games</span>
+                    <span class="tag">Mini Games</span>
+                    <span class="tag">PvP Arenas</span>
+                    <span class="tag">Educational Games</span>
+                    <span class="tag">Marketing Games</span>
+                    <span class="tag">Creator Games</span>
+                </div>
+                
+                <p class="exclusion-note text-center mt-12 t-xs">Not AAA games. Not massive productions. Playable games delivered quickly.</p>
+            </div>
+        </section>
+
+        <section id="vision" class="section-padding surface-lift" data-reveal>
+            <div class="container text-center">
+                <span class="badge badge-neutral">Vision</span>
+                <blockquote class="vision-quote t-2xl mt-8">
+                    ArmorRiot turns game creation from a technical process into a creative process. <br/>
+                    We believe anyone with an idea should be able to create and publish a game.
+                </blockquote>
+               
+                <div class="long-term-goal card card-s2 mt-24 stagger-1" data-reveal>
+                    <span class="badge badge-amber">Long-Term Goal</span>
+                    <h3 class="t-xl mt-4">Become the operating system for AI-powered game creation.</h3>
+                    <p class="tagline t-lg mt-4 color-primary">From Idea → To Playable Game. All in one place.</p>
+                    
+                    <ul class="capability-list mt-12" role="list">
+                        <li class="cap-item">
+                            <span class="cap-icon"><i class="fa-solid fa-palette"></i></span>
+                            <span class="cap-text">Generate content</span>
+                        </li>
+                        <li class="cap-item">
+                            <span class="cap-icon"><i class="fa-solid fa-gamepad"></i></span>
+                            <span class="cap-text">Build gameplay</span>
+                        </li>
+                        <li class="cap-item">
+                            <span class="cap-icon"><i class="fa-solid fa-rocket"></i></span>
+                            <span class="cap-text">Publish instantly</span>
+                        </li>
+                        <li class="cap-item">
+                            <span class="cap-icon"><i class="fa-solid fa-users"></i></span>
+                            <span class="cap-text">Operate multiplayer experiences</span>
+                        </li>
+                        <li class="cap-item">
+                            <span class="cap-icon"><i class="fa-solid fa-gears"></i></span>
+                            <span class="cap-text">Grow games without managing infrastructure</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section-padding" data-reveal>
+            <div class="container max-w-narrow">
+                <div class="text-center mb-16">
+                    <span class="badge badge-violet">Contact</span>
+                    <h2 class="section-title t-2xl">Let's build the future of game creation together.</h2>
+                    <p class="section-body t-base">Interested in partnering, investing, or learning more about ArmorRiot? Reach out.</p>
+                </div>
+
+                <div id="contact-form-container" class="card card-s2 stagger-1" data-reveal>
+                    <form id="contact-form" class="form-grid">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" id="name" name="name" class="form-input" placeholder="Your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" name="email" class="form-input" placeholder="you@company.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea id="message" name="message" class="form-input" placeholder="Tell us why you're reaching out..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg w-full justify-center">Send Message →</button>
+                    </form>
+                    <div id="success-message" class="success-state hidden">
+                        <div class="success-icon"><i class="fa-solid fa-check"></i></div>
+                        <h3 class="t-xl">Message Sent!</h3>
+                        <p class="t-base">Thank you for reaching out. We'll be in touch soon.</p>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-12">
+                    <a href="https://armorriot.com" target="_blank" class="footer-link t-sm">Or visit armorriot.com ↗</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <a href="#home" class="logo-wrapper">
+                    <svg width="24" height="24" viewBox="0 0 32 32" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                        <polygon points="16,2 30,10 30,22 16,30 2,22 2,10" fill="none" stroke="var(--color-primary)" stroke-width="1.5"/>
+                        <polygon points="16,7 25,12 25,20 16,25 7,20 7,12" fill="oklch(0.68 0.22 295 / 0.12)" stroke="var(--color-primary)" stroke-width="1"/>
+                        <polygon points="16,12 20,14.5 20,19 16,21.5 12,19 12,14.5" fill="oklch(0.68 0.22 295 / 0.4)"/>
+                    </svg>
+                    <span class="logo-text">ArmorRiot</span>
+                </a>
+                <p class="footer-tagline">Finish the Game You Started</p>
+            </div>
+            <div class="footer-links">
+                <a href="https://armorriot.com" target="_blank" class="footer-link">armorriot.com ↗</a>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">© 2026 ArmorRiot</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
